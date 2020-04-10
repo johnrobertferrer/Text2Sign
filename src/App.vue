@@ -160,7 +160,11 @@
     },
     watch: {
       search (val) {
-        val && val !== this.select && this.querySelections(val)
+        if(this.search == "" || this.search == " ") {
+          this.select = null;
+        }
+
+        val && val !== this.select && this.querySelections(val);
       },
     },
     computed: {
