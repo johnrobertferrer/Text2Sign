@@ -68,10 +68,12 @@
     ></v-progress-linear>
       </v-alert>
 
-    <v-row dense v-show="processing">
+    <v-row v-show="processing">
       <v-col
         v-for="card in [1,2,3,4,5,6,7,8,9,10]"
-        cols="6"
+        cols="12"
+        md="6"
+        lg="4"
       >
         <v-skeleton-loader
           type="card"
@@ -79,12 +81,14 @@
       </v-col>
     </v-row>
 
-
+    <v-container>
       <v-row dense v-show="!processing">
         <v-col
           v-for="card in availableCards"
           :key="card.title"
           :cols="card.flex"
+          md="6"
+          lg="4"
         >
           <custom-card 
             :title="card.title"
@@ -94,6 +98,7 @@
           />
         </v-col>
       </v-row>
+      </v-container>
 
       <v-btn class="my-3" large block color="primary" @click.native="addLimit" v-show="!processing && availableCards.length == pagination.limit">
         <v-icon dark class="mr-2" >
@@ -203,7 +208,7 @@
                   src: card.images.fixed_height.url,
                   lazySrc: card.images.fixed_width_small_still.url,
                   title: title,
-                  flex: 6
+                  flex: 12
                 }
               );
             }
