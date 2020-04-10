@@ -1,9 +1,19 @@
-# DEAF Ed
+# text2sign
 
-> It is an application for non-deaf people who wants to know or familiarize the hand sign language of deaf people
-
-## Usage
-
+## Project setup
 ```
-    npm install
+npm install
 ```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
