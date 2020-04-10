@@ -86,43 +86,21 @@
           :key="card.title"
           :cols="card.flex"
         >
-          <v-card>
-            <v-img
-              :src="card.src"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="100%"
-            >
-              <v-card-title v-text="card.title"></v-card-title>
-            </v-img>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <custom-card 
+            :title="card.title"
+            :src="card.src"
+            :id="card.id"
+            :lazysrc="card.lazySrc"
+          />
         </v-col>
       </v-row>
 
-      <!-- <div > -->
-        <v-btn class="my-3" large block color="primary" @click.native="addLimit">
-          <v-icon dark class="mr-2" >
-            mdi-plus-circle
-          </v-icon>
-          Load more? 
-        </v-btn>
-      <!-- </div> -->
+      <v-btn class="my-3" large block color="primary" @click.native="addLimit" v-show="!processing && availableCards.length == pagination.limit">
+        <v-icon dark class="mr-2" >
+          mdi-plus-circle
+        </v-icon>
+        Load more? 
+      </v-btn>
 
       </v-container>
     </v-content>
@@ -143,8 +121,12 @@
 </template>
 
 <script>
+  import CustomCard from './components/CustomCard.vue';
 
   export default {
+    components: {
+      CustomCard
+    },
     data() {
       return {
         drawer: null,
@@ -194,7 +176,6 @@
     },
     methods: {
       addLimit() {
-        console.log('test');
         this.pagination.limit = this.giphy.limit - this.pagination.limit > 0 
           ? this.pagination.limit + 10
           : this.giphy.limit;
@@ -220,6 +201,7 @@
                 {
                   id: card.id,
                   src: card.images.fixed_height.url,
+                  lazySrc: card.images.fixed_width_small_still.url,
                   title: title,
                   flex: 6
                 }
@@ -232,7 +214,7 @@
 
         setTimeout(() => {
           this.processing = false;
-        }, 2 * this.giphy.limit);
+        }, this.giphy.limit);
       },
 
       getCardTitle(card) {
